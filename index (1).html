@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ruta Cultural Interactiva</title>
+<meta name="description" content="Ruta cultural interactiva: una guía para descubrir arte, patrimonio y espacios comunitarios cerca de ti. Recorrido, agenda cultural y artistas invitados.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@500;600;700&family=Barlow+Condensed:ital,wght@1,700&display=swap" rel="stylesheet">
+<style>
+  /* Dirección: afiche de collage en papel (crema, verde bosque, terracota), tipografía condensada pesada.
+     Layout: una columna pensada para celular, secciones como tiras de papel rasgado. */
+  :root {
+    --papel: #efe3cf;
+    --papel-2: #e4d3b8;
+    --verde: #1f3a26;
+    --terracota: #c2531f;
+    --tinta: #1d1a14;
+    --display: "Anton", Impact, "Arial Narrow Bold", sans-serif;
+    --cursiva: "Barlow Condensed", "Arial Narrow", sans-serif;
+    --cuerpo: "Barlow", "Helvetica Neue", Arial, sans-serif;
+    --rasgado: polygon(0 4%, 6% 0, 14% 3%, 23% 0, 33% 3%, 44% 0, 55% 3%, 66% 0, 77% 3%, 88% 0, 100% 3%, 100% 97%, 91% 100%, 80% 97%, 68% 100%, 57% 97%, 45% 100%, 33% 97%, 21% 100%, 10% 97%, 0 100%);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+  body {
+    margin: 0;
+    background-color: var(--papel);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .25  0 0 0 0 .1  0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    color: var(--tinta);
+    font-family: var(--cuerpo);
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.5;
+    color-scheme: light;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--terracota); outline-offset: 3px; }
+  .wrap { width: min(100% - 32px, 960px); margin-inline: auto; }
+
+  /* Barra superior */
+  .top {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--verde); color: var(--papel);
+  }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; }
+  .brand { font-family: var(--display); letter-spacing: .04em; text-transform: uppercase; font-size: 16px; text-decoration: none; white-space: nowrap; }
+  .eyebrow { margin: 0 0 12px; font-family: var(--display); text-transform: uppercase; letter-spacing: .08em; font-size: 16px; color: var(--terracota); }
+  .intro { margin: 22px 0 0; max-width: 46ch; font-weight: 600; font-size: 19px; }
+  .brand b { color: #f0a064; font-weight: 400; }
+  .top nav { display: flex; gap: 6px; overflow-x: auto; }
+  .top nav a {
+    font-family: var(--display); text-transform: uppercase; letter-spacing: .05em; font-size: 14px;
+    text-decoration: none; padding: 8px 10px; white-space: nowrap; border-radius: 4px;
+  }
+  .top nav a:hover { background: rgba(239,227,207,.14); }
+
+  /* Portada */
+  .hero { padding: 36px 0 56px; position: relative; overflow: hidden; }
+  .hero h1 {
+    margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase;
+    line-height: .86; letter-spacing: .01em; text-wrap: balance;
+    font-size: clamp(76px, 22vw, 188px); color: var(--verde);
+  }
+  .hero h1 .l2 { color: var(--terracota); display: block; }
+  .hero h1 .l3 { display: block; transform: skewX(-9deg) rotate(-2deg); transform-origin: left bottom; width: max-content; }
+  .pin-line { display: flex; align-items: center; gap: 10px; margin: 18px 0 0; color: var(--terracota); }
+  .pin-line svg { flex: none; }
+  .pin-line span { flex: 1; border-top: 3px dashed var(--verde); max-width: 220px; opacity: .6; }
+  .strip { margin: 28px 0 0; display: grid; gap: 0; max-width: 560px; }
+  .strip .a, .strip .b { padding: 14px 20px; clip-path: var(--rasgado); }
+  .strip .a { background: var(--terracota); color: var(--papel); font-family: var(--cursiva); font-style: italic; font-weight: 700; font-size: clamp(30px, 8vw, 46px); line-height: 1; padding-bottom: 20px; }
+  .strip .b { background: var(--verde); color: var(--papel); font-family: var(--display); text-transform: uppercase; letter-spacing: .03em; font-size: clamp(15px, 4vw, 20px); margin-top: -6px; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .btn {
+    font-family: var(--display); text-transform: uppercase; letter-spacing: .05em; font-size: 18px;
+    padding: 14px 22px; border: 3px solid var(--verde); background: var(--verde); color: var(--papel);
+    text-decoration: none; cursor: pointer; border-radius: 2px; transition: transform .15s;
+  }
+  .btn:hover { transform: translateY(-2px) rotate(-.6deg); }
+  .btn.alt { background: transparent; color: var(--verde); }
+
+  /* Secciones */
+  section { padding: 56px 0; }
+  .band { background: var(--verde); color: var(--papel); clip-path: var(--rasgado); padding: 72px 0; }
+  h2 {
+    margin: 0 0 8px; font-family: var(--display); font-weight: 400; text-transform: uppercase;
+    font-size: clamp(40px, 10vw, 76px); line-height: .92; letter-spacing: .01em; text-wrap: balance;
+  }
+  h2 em { font-style: normal; color: var(--terracota); }
+  .band h2 em { color: #f0a064; }
+  .lead { margin: 0 0 28px; max-width: 56ch; font-weight: 600; }
+
+  /* Recorrido */
+  .ruta-grid { display: grid; gap: 24px; }
+  .mapa { background: var(--papel); border: 3px solid var(--tinta); padding: 10px; border-radius: 2px; }
+  .mapa svg { display: block; width: 100%; height: auto; }
+  .stop { cursor: pointer; }
+  .stop circle { fill: var(--verde); stroke: var(--papel); stroke-width: 3; transition: fill .2s, r .2s; }
+  .stop text { font-family: var(--display); font-size: 20px; fill: var(--papel); text-anchor: middle; pointer-events: none; }
+  .stop.on circle { fill: var(--terracota); r: 24; }
+  .stop:focus-visible { outline: none; }
+  .stop:focus-visible circle { stroke: var(--tinta); }
+  .stepper { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 0 0 14px; padding: 0; list-style: none; }
+  .stepper button {
+    width: 100%; font-family: var(--display); font-size: 20px; padding: 10px 0; cursor: pointer;
+    background: transparent; color: var(--papel); border: 2px solid var(--papel); border-radius: 2px;
+  }
+  .stepper button[aria-pressed="true"] { background: var(--papel); color: var(--verde); }
+  .detalle { background: var(--papel); color: var(--tinta); padding: 22px; clip-path: var(--rasgado); padding-block: 30px; min-height: 190px; }
+  .detalle h3 { margin: 0 0 8px; font-family: var(--display); font-weight: 400; font-size: 30px; text-transform: uppercase; color: var(--verde); line-height: 1; }
+  .detalle p { margin: 0 0 10px; }
+  .detalle .tag { display: inline-block; font-family: var(--display); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; background: var(--terracota); color: var(--papel); padding: 3px 8px; }
+
+  /* Agenda */
+  .agenda { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+  .evento { display: grid; grid-template-columns: 84px 1fr; gap: 16px; align-items: stretch; background: var(--papel-2); border: 3px solid var(--tinta); }
+  .fecha { background: var(--terracota); color: var(--papel); display: grid; place-content: center; text-align: center; font-family: var(--display); text-transform: uppercase; line-height: .95; padding: 10px 0; }
+  .fecha small { display: block; font-size: 16px; letter-spacing: .08em; }
+  .fecha strong { font-weight: 400; font-size: 42px; }
+  .evento div:last-child { padding: 12px 14px 12px 0; }
+  .evento h3 { margin: 0 0 4px; font-family: var(--display); font-weight: 400; font-size: 24px; text-transform: uppercase; color: var(--verde); line-height: 1.05; }
+  .evento p { margin: 0; font-size: 16px; }
+  .nota { margin: 18px 0 0; font-size: 14px; font-weight: 600; opacity: .75; }
+
+  /* Artistas */
+  .artistas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 0; padding: 0; list-style: none; }
+  .artista { background: var(--papel); color: var(--tinta); padding: 18px 16px 20px; clip-path: var(--rasgado); padding-block: 26px; }
+  .artista .ini { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: var(--terracota); color: var(--papel); font-family: var(--display); font-size: 30px; margin-bottom: 10px; }
+  .artista:nth-child(even) .ini { background: var(--verde); }
+  .artista h3 { margin: 0 0 4px; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 21px; color: var(--verde); line-height: 1.05; }
+  .artista p { margin: 0; font-size: 15px; line-height: 1.35; }
+
+  /* Participa */
+  .participa { display: grid; gap: 24px; }
+  form { display: grid; gap: 14px; background: var(--papel-2); border: 3px solid var(--tinta); padding: 20px; }
+  label { display: grid; gap: 4px; font-weight: 700; font-size: 15px; }
+  input, select, textarea {
+    font: inherit; font-weight: 500; padding: 11px 12px; border: 2px solid var(--tinta); background: var(--papel); color: var(--tinta); border-radius: 2px; width: 100%;
+  }
+  textarea { min-height: 120px; resize: vertical; }
+  .resultado { display: none; gap: 10px; }
+  .resultado.on { display: grid; }
+  .estado { min-height: 1.4em; font-weight: 700; color: var(--verde); margin: 0; }
+
+  /* Pie */
+  .valores { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; margin: 0; padding: 0; list-style: none; border-top: 3px solid var(--papel); }
+  .valores li { padding: 14px 8px; font-family: var(--display); text-transform: uppercase; font-size: 15px; letter-spacing: .04em; line-height: 1.15; border-bottom: 1px solid rgba(239,227,207,.3); }
+  .valores b { display: block; font-weight: 400; color: #f0a064; font-size: 20px; }
+  footer { background: var(--verde); color: var(--papel); padding: 0 0 28px; }
+  footer .wrap > p { margin: 20px 0 0; font-family: var(--cursiva); font-style: italic; font-weight: 700; font-size: 22px; }
+  footer small { display: block; margin-top: 8px; opacity: .75; font-weight: 600; }
+
+  @media (min-width: 760px) {
+    body { font-size: 18px; }
+    .ruta-grid { grid-template-columns: 1.1fr .9fr; align-items: start; }
+    .participa { grid-template-columns: 1fr 1fr; align-items: start; }
+    .artistas { grid-template-columns: repeat(4, 1fr); }
+    .valores { grid-template-columns: repeat(4, 1fr); }
+    .valores li { border-bottom: 0; border-right: 1px solid rgba(239,227,207,.3); }
+    .valores li:last-child { border-right: 0; }
+  }
+  @media (max-width: 520px) {
+    .top nav a:nth-child(n+3) { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .btn, .stop circle { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio">Ruta Cultural <b>Interactiva</b></a>
+    <nav aria-label="Secciones">
+      <a href="#ruta">Recorrido</a>
+      <a href="#agenda">Agenda</a>
+      <a href="#artistas">Artistas</a>
+      <a href="#participa">Participa</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero" id="inicio">
+    <div class="wrap">
+      <p class="eyebrow">Ruta cultural interactiva</p>
+      <h1>Ruta <span class="l2">Mistral</span><span class="l3">Viva</span></h1>
+      <div class="pin-line" aria-hidden="true">
+        <svg width="26" height="34" viewBox="0 0 26 34"><path d="M13 0C6 0 0 5.6 0 12.6 0 22 13 34 13 34s13-12 13-21.400C26 5.600 20 0 13 0z" fill="currentColor"/><circle cx="13" cy="12.500" r="5" fill="#efe3cf"/></svg>
+        <span></span>
+      </div>
+      <div class="strip">
+        <div class="a">Recorre, descubre y participa</div>
+        <div class="b">El entorno del museo cobra vida</div>
+      </div>
+      <p class="intro">Una guía para descubrir arte, patrimonio y espacios comunitarios cerca de ti, desde tu celular.</p>
+      <div class="ctas">
+        <a class="btn" href="#ruta">Ver el recorrido</a>
+        <a class="btn alt" href="#agenda">Agenda cultural</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="band" id="ruta" aria-labelledby="t-ruta">
+    <div class="wrap">
+      <h2 id="t-ruta">Recorrido del <em>entorno</em></h2>
+      <p class="lead">Cuatro paradas para conocer el museo y lo que pasa a su alrededor. Toca un número para ver qué encuentras en cada una.</p>
+      <div class="ruta-grid">
+        <div>
+          <ol class="stepper" id="stepper"></ol>
+          <div class="mapa">
+            <svg viewBox="0 0 400 260" role="group" aria-label="Esquema del recorrido con cuatro paradas">
+              <rect width="400" height="260" fill="#efe3cf"/>
+              <g stroke="#1f3a26" stroke-opacity=".12" stroke-width="14" fill="none" stroke-linecap="round">
+                <path d="M0 200 L400 170"/><path d="M110 0 L150 260"/><path d="M270 0 L250 260"/>
+              </g>
+              <path id="camino" d="M60 170 C120 60 180 60 215 105 S330 200 345 90" fill="none" stroke="#c2531f" stroke-width="5" stroke-dasharray="3 12" stroke-linecap="round"/>
+              <g class="stop" data-i="0" tabindex="0" role="button" aria-label="Parada 1"><circle cx="60" cy="170" r="20"/><text x="60" y="177">1</text></g>
+              <g class="stop" data-i="1" tabindex="0" role="button" aria-label="Parada 2"><circle cx="165" cy="82" r="20"/><text x="165" y="89">2</text></g>
+              <g class="stop" data-i="2" tabindex="0" role="button" aria-label="Parada 3"><circle cx="262" cy="150" r="20"/><text x="262" y="157">3</text></g>
+              <g class="stop" data-i="3" tabindex="0" role="button" aria-label="Parada 4"><circle cx="345" cy="90" r="20"/><text x="345" y="97">4</text></g>
+            </svg>
+          </div>
+        </div>
+        <article class="detalle" id="detalle" aria-live="polite"></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="agenda" aria-labelledby="t-agenda">
+    <div class="wrap">
+      <h2 id="t-agenda">Agenda <em>cultural</em></h2>
+      <p class="lead">Intervenciones, talleres y muestras abiertas a la comunidad.</p>
+      <ul class="agenda">
+        <li class="evento">
+          <div class="fecha"><small>Fecha</small><strong>00</strong></div>
+          <div><h3>Intervención artística en el entorno</h3><p>Poesía, música y patrimonio local en el espacio público.</p></div>
+        </li>
+        <li class="evento">
+          <div class="fecha"><small>Fecha</small><strong>00</strong></div>
+          <div><h3>Recorrido cultural guiado</h3><p>Ruta breve por las paradas, afiches y contenidos QR.</p></div>
+        </li>
+        <li class="evento">
+          <div class="fecha"><small>Fecha</small><strong>00</strong></div>
+          <div><h3>Muestra de artistas invitados</h3><p>Vitrina abierta para creadores y organizaciones locales.</p></div>
+        </li>
+      </ul>
+      <p class="nota">Contenido de prueba: las fechas se confirman con el museo antes de la salida.</p>
+    </div>
+  </section>
+
+  <section class="band" id="artistas" aria-labelledby="t-art">
+    <div class="wrap">
+      <h2 id="t-art">Artistas <em>invitados</em></h2>
+      <p class="lead">Una vitrina para sumar voces nuevas al entorno del museo.</p>
+      <ul class="artistas">
+        <li class="artista"><div class="ini" aria-hidden="true">A</div><h3>Artista visual</h3><p>Murales, ilustración y memoria local.</p></li>
+        <li class="artista"><div class="ini" aria-hidden="true">P</div><h3>Poeta</h3><p>Lecturas y cápsulas audiovisuales.</p></li>
+        <li class="artista"><div class="ini" aria-hidden="true">M</div><h3>Músico local</h3><p>Presentaciones breves en el entorno.</p></li>
+        <li class="artista"><div class="ini" aria-hidden="true">C</div><h3>Colectivo cultural</h3><p>Talleres, mediación y comunidad.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="participa" aria-labelledby="t-part">
+    <div class="wrap">
+      <h2 id="t-part">Tú eres parte de <em>la ruta</em></h2>
+      <p class="lead">Invitamos a más artistas a participar. Cuéntanos qué haces y prepara tu mensaje para el equipo.</p>
+      <div class="participa">
+        <form id="form" novalidate>
+          <label for="nombre">Nombre o colectivo
+            <input id="nombre" name="nombre" autocomplete="name" required>
+          </label>
+          <label for="disciplina">Disciplina
+            <select id="disciplina" name="disciplina">
+              <option>Artes visuales</option>
+              <option>Poesía y literatura</option>
+              <option>Música</option>
+              <option>Teatro y danza</option>
+              <option>Taller o mediación</option>
+              <option>Otra</option>
+            </select>
+          </label>
+          <label for="contacto">Correo o Instagram
+            <input id="contacto" name="contacto" autocomplete="email" required>
+          </label>
+          <button class="btn" type="submit">Preparar mensaje</button>
+        </form>
+        <div class="resultado" id="resultado">
+          <label for="msg">Tu mensaje
+            <textarea id="msg" readonly></textarea>
+          </label>
+          <button class="btn alt" type="button" id="copiar">Copiar mensaje</button>
+          <p class="estado" id="estado" role="status"></p>
+          <p class="nota">Envíalo al equipo de Ruta Mistral Viva. El canal de contacto se publica antes de la salida.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <ul class="valores">
+      <li><b>Cultura</b>que conecta</li>
+      <li><b>Comunidad</b>que inspira</li>
+      <li><b>Patrimonio</b>que vive</li>
+      <li><b>Tú eres</b>parte de la ruta</li>
+    </ul>
+    <p>La cultura se camina, se vive, se comparte.</p>
+    <small>Ruta Cultural Interactiva · Prototipo académico</small>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Edita aquí el contenido de cada parada.
+  var PARADAS = [
+    { t: "Punto de inicio", d: "Empieza en el Museo Gabriela Mistral. Aquí encuentras el primer afiche con el QR de la ruta.", e: "Por confirmar" },
+    { t: "Espacio cultural", d: "Un lugar cercano al museo donde se muestran obras y actividades de artistas locales.", e: "Por confirmar" },
+    { t: "Zona de afiches y QR", d: "Afiches interactivos: escanea el código y abre contenido nuevo desde tu celular, sin instalar nada.", e: "Por confirmar" },
+    { t: "Pantalla y actividades", d: "Pantalla audiovisual con cápsulas de poesía y la programación de las actividades abiertas.", e: "Por confirmar" }
+  ];
+  var stepper = document.getElementById("stepper");
+  var detalle = document.getElementById("detalle");
+  var stops = document.querySelectorAll(".stop");
+  var botones = [];
+
+  PARADAS.forEach(function (p, i) {
+    var li = document.createElement("li");
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = i + 1;
+    b.setAttribute("aria-label", "Parada " + (i + 1) + ": " + p.t);
+    b.addEventListener("click", function () { elegir(i); });
+    li.appendChild(b);
+    stepper.appendChild(li);
+    botones.push(b);
+  });
+
+  function elegir(i) {
+    var p = PARADAS[i];
+    detalle.innerHTML = "";
+    var h = document.createElement("h3");
+    h.textContent = (i + 1) + ". " + p.t;
+    var d = document.createElement("p");
+    d.textContent = p.d;
+    var tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = p.e;
+    detalle.appendChild(h); detalle.appendChild(d); detalle.appendChild(tag);
+    botones.forEach(function (b, j) { b.setAttribute("aria-pressed", j === i ? "true" : "false"); });
+    stops.forEach(function (s, j) { s.classList.toggle("on", j === i); });
+  }
+
+  stops.forEach(function (s) {
+    var i = Number(s.getAttribute("data-i"));
+    s.addEventListener("click", function () { elegir(i); });
+    s.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); elegir(i); }
+    });
+  });
+  elegir(0);
+
+  // Formulario de participación: arma el mensaje y permite copiarlo.
+  var form = document.getElementById("form");
+  var resultado = document.getElementById("resultado");
+  var msg = document.getElementById("msg");
+  var estado = document.getElementById("estado");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var n = document.getElementById("nombre").value.trim();
+    var c = document.getElementById("contacto").value.trim();
+    var d = document.getElementById("disciplina").value;
+    if (!n || !c) { estado.textContent = ""; resultado.classList.add("on"); msg.value = "Completa tu nombre y un medio de contacto para preparar el mensaje."; return; }
+    msg.value = "Hola, equipo de Ruta Mistral Viva. Soy " + n + " (" + d.toLowerCase() + ") y me gustaría participar en la ruta. Pueden contactarme en " + c + ".";
+    estado.textContent = "";
+    resultado.classList.add("on");
+  });
+  document.getElementById("copiar").addEventListener("click", function () {
+    try {
+      navigator.clipboard.writeText(msg.value).then(
+        function () { estado.textContent = "Mensaje copiado."; },
+        function () { msg.select(); estado.textContent = "Selecciona el texto y cópialo."; }
+      );
+    } catch (err) { msg.select(); estado.textContent = "Selecciona el texto y cópialo."; }
+  });
+})();
+</script>
+</body>
+</html>
